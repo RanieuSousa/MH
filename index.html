@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="styles.css" rel="stylesheet"  >
+  <title>Simulador de Máquina</title>
+</head>
+<body>
+  <div id="container" class="notepad-container">
+    <div class="notepad-header">
+      <div class="title">Simulador de Máquina</div>
+      <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button"><img src="img/close.png" width="80%"></div>
+      </div>
+  </div>
+  <div class="notepad-menu">
+    <span id="executar">Execute</span>
+    <span id="memoryButton">Memory</span>
+    <span onclick="openMemoryTableModal()"> Table Memory</span>
+    <span id="instructions">Instructions</span>
+    <span id="helpButton">Help</span>
+</div>
+<div class="notepad-contents-wrapper">
+    <textarea id="codigo" placeholder="Digite o código hexadecimal aqui...exe 14A3C000 "  class="notepad-content" contenteditable="true"></textarea>
+   
+    <div class="notepad-content" id="output" contenteditable="true">
+    
+  </div>
+  <div class="notepad-content" id="registradores" contenteditable="true">
+    <!-- Tabela de registradores diretamente aqui -->
+    <table id="tabela-registradores">
+        <thead>
+            <tr>
+                <th>Register</th>
+                <th>Value</th>
+                <th>Action</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <!-- As linhas da tabela serão preenchidas dinamicamente pelo JavaScript -->
+        </tbody>
+    </table>
+  </div>
+</div>
+</div>
+  </div>
+  </div>
+  <!-- Modal Memory -->
+  <div id="memoryModal" class="modal">
+    <div class="modal-header">      
+      <div class="notepad-header">
+        <div class="title">Memory</div>
+        <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button close" onclick="closeModal('memoryModal')"><img src="img/close.png" width="80%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div class="input-field">
+        <label for="input1">Address (0x00 to 0xFF):</label>
+        <input type="text" id="input1" placeholder="Enter address (00 to FF)">
+      </div>
+      <div class="input-field">
+        <label for="input2">Value</label>
+        <input type="text" id="input2" placeholder="Enter value (00 to FF)">
+      </div>
+      <br>
+      <button id="saveBtn">Save</button>
+      <div id="error-message" style="color: red;"></div>
+    </div>
+</div>
+
+  <!-- Modal Help -->
+  <div id="helpModal" class="modal">
+    <div class="modal-header">      
+      <div class="notepad-header">
+        <div class="title">Help</div>
+        <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button" class="close" onclick="closeModal('helpModal')"><img src="img/close.png" width="80%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <p><strong>System:</strong> Simulador de Máquina</p>
+      <p><strong>versions:</strong> 1.0</p>
+      <p><strong>Year:</strong> 2025</p>
+      <p><strong>Idealizer BY:</strong> Marco Sousa</p>
+      <p><strong>Developed BY:</strong> Ranieu Sousa</p>
+    </div>
+  </div>
+
+  <div id="memoryTableModal" class="modal">
+    <div class="modal-header">      
+      <div class="notepad-header">
+        <div class="title">Memory Table</div>
+        <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button close" onclick="closeModal('memoryTableModal')"><img src="img/close.png" width="80%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <table id="memoryTable">
+        <thead>
+          <tr>
+            <th>Address</th>
+            <th>Value</th>
+            <th>Action</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <!-- As linhas da tabela serão preenchidas dinamicamente pelo JavaScript -->
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+  <script src="script.js"></script>
+  <script>
+    // Obtenha referências aos elementos HTML
+    const botaoExecutar = document.getElementById('executar');
+    const campoCodigo = document.getElementById('codigo');
+    const output = document.getElementById('output');
+
+    // Evento para o botão de execução
+    botaoExecutar.addEventListener('click', () => {
+      const codigoHexadecimal = campoCodigo.value; 
+      const maquina = new SimuladorMaquina(); 
+      maquina.iniciarPrograma(codigoHexadecimal); 
+    });
+
+     // Função para abrir modais
+     function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    // Função para fechar modais
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Botões para abrir os modais
+    document.getElementById('memoryButton').addEventListener('click', function() {
+      openModal('memoryModal');
+    });
+
+ 
+
+    document.getElementById('helpButton').addEventListener('click', function() {
+      openModal('helpModal');
+    });
+
+     // Quando o botão Instructions for clicado, redireciona para instructions.html
+     document.getElementById('instructions').addEventListener('click', function() {
+    window.open('instructions.html', '_blank');
+});
+
+
+        // Quando o botão Example for clicado, redireciona para example.html
+        document.getElementById('example').addEventListener('click', function() {
+            window.location.href = 'example.html';
+        });
+  </script>
+
+<script>
+  document.getElementById("saveBtn").addEventListener("click", function() {
+      const address = document.getElementById("input1").value.trim().toUpperCase();
+      const value = document.getElementById("input2").value.trim().toUpperCase();
+      const errorMessage = document.getElementById("error-message");
+  
+      // Regex para validar o endereço e o valor (hexadecimal 00-FF)
+      const hexPattern = /^(0[0-9A-F]|[1-9A-F][0-9A-F])$/;
+  
+      // Valida o endereço e o valor
+      if (!hexPattern.test(address)) {
+          errorMessage.textContent = "Invalid address. Please enter a value between 00 and FF.";
+          return;
+      }
+  
+      if (!hexPattern.test(value)) {
+          errorMessage.textContent = "Invalid value. Please enter a value between 00 and FF.";
+          return;
+      }
+  
+      // Limpa a mensagem de erro
+      errorMessage.textContent = "";
+  
+      // Salva no localStorage (usando address como chave e value como valor)
+      localStorage.setItem(address, value);
+  
+      alert(`Memory address ${address} saved with value ${value}`);
+  });
+  </script>
+  
+
+  <script>
+    // Função para abrir o modal e gerar a tabela de memória
+    function openMemoryTableModal() {
+        const tableBody = document.querySelector("#memoryTable tbody");
+        tableBody.innerHTML = ""; // Limpa a tabela antes de preencher
+    
+        // Itera sobre todos os itens no localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+            const address = localStorage.key(i); 
+            const value = localStorage.getItem(address); 
+    
+            // Cria uma nova linha na tabela
+            const row = document.createElement("tr");
+    
+            const addressCell = document.createElement("td");
+            addressCell.textContent = address; 
+    
+            const valueCell = document.createElement("td");
+            valueCell.textContent = value; 
+    
+            // Criando o botão de exclusão (ícone "X")
+            const deleteCell = document.createElement("td");
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "X";  
+            deleteButton.style.color = "red"; 
+            deleteButton.style.cursor = "pointer"; 
+            deleteButton.onclick = function() {
+                localStorage.removeItem(address);
+                row.remove(); 
+                alert(`Memory address ${address} has been deleted.`);
+            };
+  
+            deleteCell.appendChild(deleteButton); 
+            row.appendChild(addressCell);
+            row.appendChild(valueCell);
+            row.appendChild(deleteCell); 
+    
+            tableBody.appendChild(row);  
+        }
+    
+      
+        openModal('memoryTableModal');
+    }
+  </script>
+   <script>
+    // Função para preencher a tabela de registradores
+    document.addEventListener("DOMContentLoaded", function() {
+      const tableBody = document.querySelector("#tabela-registradores tbody");
+      tableBody.innerHTML = ""; 
+
+      // Itera sobre os registradores de 0 a 15
+      for (let i = 0; i < 16; i++) {
+          const register = `R${i}`;
+          const value = localStorage.getItem(register) || "0"; 
+
+          // Cria uma nova linha na tabela
+          const row = document.createElement("tr");
+
+          const registerCell = document.createElement("td");
+          registerCell.textContent = register; 
+
+          const valueCell = document.createElement("td");
+          valueCell.textContent = value; 
+
+          // Criando o botão de exclusão (ícone "X")
+          const deleteCell = document.createElement("td");
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "X"; 
+          deleteButton.style.color = "red"; 
+          deleteButton.style.cursor = "pointer"; 
+          deleteButton.onclick = function() {
+              localStorage.removeItem(register);
+              row.remove(); 
+              alert(`Register ${register} has been deleted.`);
+          };
+
+          deleteCell.appendChild(deleteButton); 
+          row.appendChild(registerCell);
+          row.appendChild(valueCell);
+          row.appendChild(deleteCell); 
+          tableBody.appendChild(row); 
+      }
+    });
+  </script>
+
+
+  
+</body>
+</html>

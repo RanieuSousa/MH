@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #1c1a1a; /* Cor cinza Windows antigo */
+}
+.notepad-container {
+    background-color: white;
+    margin: 50px auto;
+    border: 2px solid #808080; /* borda cinza */
+    width: 1000px;
+    height: 800px;
+    position: relative;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+.notepad-header {
+    background-color: #000080; /* azul da barra de título */
+    color: white;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.notepad-header .title {
+    font-weight: bold;
+}
+.notepad-header .buttons {
+    display: flex;
+}
+.notepad-header .button {
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    background-color: white;
+    border: 1px solid #808080;
+}
+.notepad-menu {
+    background-color: #E0E0E0;
+    padding: 5px;
+    border-bottom: 1px solid #808080;
+}
+.notepad-menu span {
+    margin-right: 15px;
+    font-size: 14px;
+    cursor: pointer; /* Para mostrar que é clicável */
+}
+.notepad-contents-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.notepad-content {
+    flex: 1;
+    padding: 10px;
+    white-space: pre;
+    border-bottom: 1px solid #808080; /* Linha divisória */
+    overflow: auto;
+}
+.notepad-content:last-child {
+    border-bottom: none; /* Remove borda da última área de texto */
+}
+#executeButton {
+    background-color: #C0C0C0;
+    border: 1px solid #808080;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+    /* Estilos dos modais */
+    .modal {
+        position: fixed;
+        top: 0; /* Alinha o modal ao topo da tela */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20%; /* Largura do modal */
+        background-color: white;
+        border: 1px solid black;
+        z-index: 1000;
+        display: none; /* Oculto por padrão, pode ser exibido com JavaScript */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Estilo do cabeçalho do modal */
+    .modal-header {
+        width: 95%; /* Largura total para ocupar a área horizontal completa */
+        position: relative;
+        top: 0; /* Mantém o topo fixo na div */
+        left: 0%;
+        background-color: #f1f1f1;
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+    }
+    
+    /* Estilos gerais para a estrutura do modal */
+    .modal-content {
+        padding: 20px;
+    }
+    
+    /* Estilos da barra de título que simulam a aparência do Windows 95 */
+    .notepad-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .notepad-header .title {
+        font-family: "Arial", sans-serif;
+        font-size: 14px;
+    }
+    
+    .notepad-header .buttons {
+        display: flex;
+    }
+    
+    .notepad-header .button {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+  
+      .modal-content {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+  
+      .input-field {
+        display: flex;
+        margin-top: 10px;
+      }
+  
+      .input-field label {
+        flex: 1;
+        font-size: 14px;
+      }
+  
+      .input-field input {
+        flex: 2;
+        padding: 5px;
+        border: 1px solid #808080;
+      }
+
+      

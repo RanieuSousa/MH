@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="styles.css" rel="stylesheet"  >
+  <title>Simulador de Máquina</title>
+
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+    }
+    h1, h2 {
+        color: #333;
+        text-align: center;
+    }
+    .tabela-container {
+    max-height: 60%; /* Altura máxima da tabela */
+    overflow-y: auto; /* Rolagem vertical */
+    border: 1px solid #000; /* Borda para a tabela */
+}
+
+table {
+    width: 100%; /* Largura completa da tabela */
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #000; /* Bordas das células */
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2; /* Cor de fundo para os cabeçalhos */
+}
+</style>
+</head>
+<body>
+  <div id="container" class="notepad-container">
+    <div class="notepad-header">
+      <div class="title">Simulador de Máquina</div>
+      <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button"><img src="img/close.png" width="80%"></div>
+      </div>
+  </div>
+  <div class="notepad-menu">
+    <span id="executar">Execute</span>
+    <span id="memoryButton">Memory</span>
+    <span id="memoryButton"> Table Memory</span>
+    <span id="instructions">Instructions</span>
+    <span id="example">Example</span>
+    <span id="helpButton">Help</span>
+</div>
+<div class="notepad-contents-wrapper">
+    <h1>Máquina Hipotética</h1>
+    <p>Estamos trabalhando com uma máquina que possui 16 registradores de propósito geral e 256 células na memória principal...</p>
+
+    <h2>Tabela de Instruções</h2>
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código de operação</th>
+                    <th>Operando</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>RXY</td>
+                    <td>LOAD (carrega) o registrador R com o padrão de bits encontrado na posição de memória...</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>RXY</td>
+                    <td>LOAD (carrega) o registrador R com o padrão de bits XY. Exemplo: 20A3 coloca o valor A3 no registrador 0.</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>RXY</td>
+                    <td>STORE (armazena) o padrão de bits encontrado no registrador R na posição de memória de endereço XY. Exemplo: 35B1 armazena o conteúdo do registrador 5 na posição de memória de endereço B1.</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>0RS</td>
+                    <td>MOVE (copia) o padrão de bits encontrado no registrador R para o registrador S. Exemplo: 40A4 copia o conteúdo do registrador A no registrador 4.</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>RST</td>
+                    <td>ADD (soma) os padrões de bits dos registradores S e T, em complemento de dois, e coloca o resultado no registrador R. Exemplo: 5726 soma os valores binários dos registradores 2 e 6 e coloca esse resultado no registrador 7.</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>RST</td>
+                    <td>ADD (soma) os padrões de bits dos registradores S e T, em notação de vírgula flutuante (ponto flutuante), e coloca o resultado no registrador R. Exemplo: 634E soma os valores binários dos registradores 4 e E na notação de vírgula flutuante e coloca esse resultado no registrador 3.</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>RST</td>
+                    <td>OR (ou) executa a operação lógica OR sobre os padrões de bits dos registradores S e T e coloca o resultado no registrador R. Exemplo: 7CB4 coloca no registrador C o resultado da operação OR com os conteúdos dos registradores B e 4.</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>RST</td>
+                    <td>AND (e) executa a operação lógica AND sobre os padrões de bits encontrados dos registradores S e T e coloca o resultado no registrador R. Exemplo: 8045 coloca no registrador 0 o resultado da operação AND entre os conteúdos dos registradores 4 e 5.</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>RST</td>
+                    <td>EXCLUSIVE OR (ou exclusivo) executa a operação de OU EXCLUSIVO sobre os padrões de bits dos registradores S e T e coloca o resultado no registrador R. Exemplo: 95F3 coloca no registrador 5 o resultado da operação EXCLUSIVE OR entre os conteúdos dos registradores F e 3.</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>R0X</td>
+                    <td>ROTATE (gira) o padrão de bits do registrador R, de X bits para a direita. Sempre coloca o bit que está na extremidade de mais baixa ordem na de mais alta ordem. Exemplo: A403 gira em 3 bits para a direita o conteúdo do registrador 4, de forma circular.</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>RXY</td>
+                    <td>JUMP (salta) para a instrução localizada na posição de memória de endereço XY se o padrão de bits do registrador R coincidir com o padrão de bits do registrador 0. Exemplo: B43C primeiro compara o conteúdo do registrador 4 com o do registrador 0. Se os dois forem iguais, o padrão 3C será colocado no contador de instruções.</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>000</td>
+                    <td>HALT (para) a execução. Exemplo: C000 para a execução do programa.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+  <!-- Modal Memory -->
+  <div id="memoryModal" class="modal">
+    <div class="modal-header">      
+      <div class="notepad-header">
+        <div class="title">Memory</div>
+        <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button" class="close" onclick="closeModal('memoryModal')"><img src="img/close.png" width="80%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div class="input-field">
+        <label for="input1">Address (0x00 to 0xFF):</label>
+        <input type="text" id="input1" placeholder="Enter address (00 to FF)">
+      </div>
+      <div class="input-field">
+        <label for="input2">Value (8-bit):</label>
+        <input type="text" id="input2" placeholder="Enter value (00 to FF)">
+      </div>
+      <br>
+      <button id="saveBtn">Save</button>
+      <div id="error-message" style="color: red;"></div> <!-- Mensagem de erro -->
+    </div>
+    
+  </div>
+
+  <!-- Modal Help -->
+  <div id="helpModal" class="modal">
+    <div class="modal-header">      
+      <div class="notepad-header">
+        <div class="title">Help</div>
+        <div class="buttons">
+          <div class="button"><img src="img/minimize.png" width="80%"></div>
+          <div class="button"><img src="img/maximizar.png" width="80%"></div>
+          <div class="button" class="close" onclick="closeModal('helpModal')"><img src="img/close.png" width="80%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <p><strong>System:</strong> Simulador de Máquina</p>
+      <p><strong>versions:</strong> 1.0</p>
+      <p><strong>Year:</strong> 2024</p>
+      <p><strong>Idealizer BY:</strong> Marco Sousa</p>
+      <p><strong>Developed BY:</strong> Ranieu Sousa</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Obtenha referências aos elementos HTML
+    const botaoExecutar = document.getElementById('executar');
+    const campoCodigo = document.getElementById('codigo');
+    const output = document.getElementById('output');
+
+    // Evento para o botão de execução
+    botaoExecutar.addEventListener('click', () => {
+      const codigoHexadecimal = campoCodigo.value; // Obtém o valor do campo de texto
+      const maquina = new SimuladorMaquina(); // Presume-se que a classe SimuladorMaquina está definida no script.js
+      maquina.iniciarPrograma(codigoHexadecimal); // Inicia o programa
+    });
+
+     // Função para abrir modais
+     function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    // Função para fechar modais
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Botões para abrir os modais
+    document.getElementById('memoryButton').addEventListener('click', function() {
+      openModal('memoryModal');
+    });
+
+    document.getElementById('helpButton').addEventListener('click', function() {
+      openModal('helpModal');
+    });
+
+     // Quando o botão Instructions for clicado, redireciona para instructions.html
+     document.getElementById('instructions').addEventListener('click', function() {
+            window.location.href = 'instructions.html';
+        });
+
+        // Quando o botão Example for clicado, redireciona para example.html
+        document.getElementById('example').addEventListener('click', function() {
+            window.location.href = 'example.html';
+        });
+  </script>
+</body>
+</html>
